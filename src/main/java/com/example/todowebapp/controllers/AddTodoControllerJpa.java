@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,14 +26,14 @@ public class AddTodoControllerJpa {
 	@Autowired
 	ToDoDataJpa todoService;
 	
-	@RequestMapping(value = "add-todo", method = RequestMethod.GET)
+	@GetMapping(value = "add-todo")
 	public String addTodo(ModelMap model) {
 		ToDo todo = new ToDo(0, "","" , LocalDate.now().plusYears(1), false);
 		model.put("todo", todo);
 		return "addtodo";
 	}
 	
-	@RequestMapping(value = "add-todo", method = RequestMethod.POST)
+	@PostMapping(value = "add-todo")
 	public String addTodoPost(ModelMap model,@Valid @ModelAttribute("todo") ToDo todo, BindingResult res) {
 		if(res.hasErrors()) {
 			return "addtodo";
@@ -55,7 +57,7 @@ public class AddTodoControllerJpa {
 		return "addtodo";
 	}
 	
-	@RequestMapping(value = "update-todo", method = RequestMethod.POST)
+	@PostMapping(value = "update-todo")
 	public String updateTodoPost(ModelMap model,@Valid @ModelAttribute("todo") ToDo todo, BindingResult res) {
 		if(res.hasErrors()) {
 			return "addtodo";
